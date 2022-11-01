@@ -1,13 +1,13 @@
 CFLAGS = 
 # CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -Iincludes
-LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR) -L/usr/X11R6/lib
-LDLIBS = -lft -lmlx_Darwin -lX11 -lXext -framework OpenGL -framework AppKit
+LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR) 
+LDLIBS = -lft
 NAME = cub3D
-SRCS =	main.c
+SRCS = main.c
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))
 OBJSDIR = objs
-VPATH = srcs 
+VPATH = srcs
 
 ## libft ##
 LIBFT_DIR = libft
@@ -16,13 +16,22 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 ## minilibx ##
 MINILIBX_DIR = minilibx-linux
-MINILIBX = $(MINILIBX_DIR)/libmlx_Darwin.a
+MINILIBX = $(MINILIBX_DIR)/libmlx_Linux.a
 ##############
+
+ifeq ($(shell uname), Darwin)
+MINILIBX = $(MINILIBX_DIR)/libmlx_Darwin.a
+LDFLAGS += -L/usr/X11R6/lib
+LDLIBS += -lmlx_Darwin -framework OpenGL -framework AppKit -lXext -lX11
+else
+LDFLAGS += -L/usr/lib
+LDLIBS += -lmlx_Linux -lXext -lX11
+endif
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
-	$(CC) $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
 
 $(LIBFT):
 	make bonus -C $(LIBFT_DIR)
