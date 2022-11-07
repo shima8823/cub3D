@@ -2,7 +2,7 @@ CFLAGS =
 # CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -Iincludes
 LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR) 
-LDLIBS = -lft
+LDLIBS = -lft -lm
 NAME = cub3D
 SRCS = main.c
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))
