@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/08 19:00:54 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/08 19:04:03 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,11 +178,9 @@ int	raycast_loop(t_game_info *info)
 		}
 		// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect)
 		if (side == 0)
-			perpWallDist = (mapX - info->posX + (1 - stepX) / 2) / rayDirX;
-			// perpWallDist = (sideDistX - deltaDistX);
+			perpWallDist = (sideDistX - deltaDistX);
 		else
-			perpWallDist = (mapY - info->posY + (1 - stepY) / 2) / rayDirY;
-			// perpWallDist = (sideDistY - deltaDistY);
+			perpWallDist = (sideDistY - deltaDistY);
 
 		// Calculate height of line to draw on screen
 		int lineHeight = (int)(screenHeight / perpWallDist);
