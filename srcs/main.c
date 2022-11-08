@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/07 11:03:54 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/08 18:58:33 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,13 +162,13 @@ int	raycast_loop(t_game_info *info)
 			// jump to next map square, either in x-direction, or in y-direction
 			if (sideDistX < sideDistY)
 			{
-				sideDistX += sideDistX;
+				sideDistX += deltaDistX;
 				mapX += stepX;
 				side = 0;
 			}
 			else
 			{
-				sideDistY += sideDistY;
+				sideDistY += deltaDistY;
 				mapY += stepY;
 				side = 1;
 			}
