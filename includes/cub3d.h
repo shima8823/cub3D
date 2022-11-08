@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/06 20:21:58 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/08 13:10:13 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@
 # define KEY_S 115
 # define KEY_D 100
 
+#define mapWidth 24
+#define mapHeight 24
+#define screenWidth 640
+#define screenHeight 480
+#define texWidth 64
+#define texHeight 64
+
+typedef struct s_img
+{
+	void	*img;
+	int	*addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+} t_img;
+
 typedef struct s_game_info
 {
 	void	*mlx_ptr;
@@ -44,9 +60,14 @@ typedef struct s_game_info
 	double planeX; // 0
 	double planeY; // 0.66
 
+	int	buffer[screenHeight][screenWidth];
+	int	texture[8][texWidth * texHeight];
+
 	// speed modifiers
 	double moveSpeed;
 	double rotSpeed;
+
+	t_img	img;
 } t_game_info;
 
 
