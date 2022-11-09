@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/08 19:08:56 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/09 19:40:50 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	init_game_info(t_game_info *info);
 int		main_loop(t_game_info *info);
 int		key_hook(int keycode, t_game_info *info);
+
+void	load_texture(t_game_info *info);
+void	load_image(void *mlx_ptr, int *texture, char *path);
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -59,8 +62,6 @@ int main(int argc, char *argv[])
 
 void	init_game_info(t_game_info *info)
 {
-	int x;
-	int y;
 	info->posX = 22.0;
 	info->posY = 11.5;
 	info->dirX = -1.0;
@@ -69,38 +70,44 @@ void	init_game_info(t_game_info *info)
 	info->planeY = 0.66;
 	info->moveSpeed = 0.05;
 	info->rotSpeed = 0.05;
-	x = 0;
-	// generate some textures;
-	while (x < texWidth)
-	{
-		y = 0;
-		while (y < texHeight)
-		{
-			int xorcolor = (x * 256 / texWidth) ^ (y * 256 / texHeight);
-			int ycolor = y * 256 / texHeight;
-			int xycolor = y * 128 / texHeight + x * 128 / texWidth;
-			// flat red texture with black cross
-			(info->texture)[0][texWidth * y + x] = 65536 * 254 * (x != y && x != texWidth - y);
-			// sloped greyscale
-			(info->texture)[1][texWidth * y + x] = xycolor + 256 * xycolor + 65536 * xycolor;
-			// sloped yellow gradient
-			(info->texture)[2][texWidth * y + x] = 256 * xycolor + 65536 * xycolor;
-			// xor grayscale
-			(info->texture)[3][texWidth * y + x] = xorcolor + 256 * xorcolor + 65536 * xorcolor;
-			// xor green
-			(info->texture)[4][texWidth * y + x] = 256 * xorcolor;
-			// red bricks
-			(info->texture)[5][texWidth * y + x] = 65536 * 192 * (x % 16 && y % 16);
-			// red gradient
-			(info->texture)[6][texWidth * y + x] = 65536 * ycolor;
-			// flat grey texture
-			(info->texture)[7][texWidth * y + x] = 128 + 256 * 128 + 65536 * 128;
-			y++;
-		}
-		x++;
-	}
+
+	load_texture(info);
 	info->img.img = mlx_new_image(info->mlx_ptr, screenWidth, screenHeight);
 	info->img.addr = (int *)mlx_get_data_addr(info->img.img, &info->img.bits_per_pixel, &info->img.size_line, &info->img.endian);
+}
+
+void	load_texture(t_game_info *info)
+{
+	load_image(info->mlx_ptr, info->texture[0], "textures/eagle.xpm");
+	load_image(info->mlx_ptr, info->texture[1], "textures/wood.xpm");
+	load_image(info->mlx_ptr, info->texture[2], "textures/purplestone.xpm");
+	load_image(info->mlx_ptr, info->texture[3], "textures/greystone.xpm");
+	load_image(info->mlx_ptr, info->texture[4], "textures/bluestone.xpm");
+	load_image(info->mlx_ptr, info->texture[5], "textures/mossy.xpm");
+	load_image(info->mlx_ptr, info->texture[6], "textures/redbrick.xpm");
+	load_image(info->mlx_ptr, info->texture[7], "textures/colorstone.xpm");
+}
+
+void	load_image(void *mlx_ptr, int *texture, char *path)
+{
+	t_img	img;
+	int x;
+	int y;
+
+	img.img = mlx_xpm_file_to_image(mlx_ptr, path, &img.width, &img.height);
+	img.addr = (int *)mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line, &img.endian);
+	y = 0;
+	while (y < img.height)
+	{
+		x = 0;
+		while (x < img.width)
+		{
+			texture[img.width * y + x] = img.addr[img.width * y + x];
+			x++;
+		}
+		y++;
+	}
+	mlx_destroy_image(mlx_ptr, img.img);
 }
 
 void	draw(t_game_info *info)
