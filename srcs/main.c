@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/09 19:40:50 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/10 12:48:37 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,30 @@ void	load_image(void *mlx_ptr, int *texture, char *path);
 
 int worldMap[mapWidth][mapHeight]=
 {
-  {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7}, 
-  {4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7}, 
-  {4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7}, 
-  {4,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7}, 
-  {4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7}, 
-  {4,0,4,0,0,0,0,5,5,5,5,5,5,5,5,5,7,7,0,7,7,7,7,7}, 
-  {4,0,5,0,0,0,0,5,0,5,0,5,0,5,0,5,7,0,0,0,7,7,7,1}, 
-  {4,0,6,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-  {4,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,1},
-  {4,0,8,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-  {4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,7,7,7,1},
-  {4,0,0,0,0,0,0,5,5,5,5,0,5,5,5,5,7,7,7,7,7,7,7,1},
-  {6,6,6,6,6,6,6,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
-  {8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-  {6,6,6,6,6,6,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
-  {4,4,4,4,4,4,0,4,4,4,6,0,6,2,2,2,2,2,2,2,3,3,3,3},
-  {4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
-  {4,0,0,0,0,0,0,0,0,0,0,0,6,2,0,0,5,0,0,2,0,0,0,2},
-  {4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
-  {4,0,6,0,6,0,0,0,0,4,6,0,0,0,0,0,5,0,0,0,0,0,0,2},
-  {4,0,0,5,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
-  {4,0,6,0,6,0,0,0,0,4,6,0,6,2,0,0,5,0,0,2,0,0,0,2},
-  {4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
-  {4,4,4,4,4,4,4,4,4,4,1,1,1,2,2,2,2,2,2,3,3,3,3,3} 
+  {8,8,8,8,8,8,8,8,8,8,8,4,4,6,4,4,6,4,6,4,4,4,6,4},
+  {8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
+  {8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,6},
+  {8,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6},
+  {8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
+  {8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,6,6,6,0,6,4,6},
+  {8,8,8,8,0,8,8,8,8,8,8,4,4,4,4,4,4,6,0,0,0,0,0,6},
+  {7,7,7,7,0,7,7,7,7,0,8,0,8,0,8,0,8,4,0,4,0,6,0,6},
+  {7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,0,0,0,0,0,6},
+  {7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,0,0,0,0,4},
+  {7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,6,0,6,0,6},
+  {7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,4,6,0,6,6,6},
+  {7,7,7,7,0,7,7,7,7,8,8,4,0,6,8,4,8,3,3,3,0,3,3,3},
+  {2,2,2,2,0,2,2,2,2,4,6,4,0,0,6,0,6,3,0,0,0,0,0,3},
+  {2,2,0,0,0,0,0,2,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
+  {2,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
+  {1,0,0,0,0,0,0,0,1,4,4,4,4,4,6,0,6,3,3,0,0,0,3,3},
+  {2,0,0,0,0,0,0,0,2,2,2,1,2,2,2,6,6,0,0,5,0,5,0,5},
+  {2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
+  {2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5},
+  {2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
+  {2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
+  {2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
 };
 
 
@@ -132,14 +132,77 @@ void	draw(t_game_info *info)
 void	calc(t_game_info *info)
 {
 	int	x;
-	x = 0;
-	for (int i = 0; i < screenHeight; i++)
+	int y;
+	// FLOOR CASTING
+	y = 0;
+	while (y < screenHeight)
 	{
-		for (int j = 0; j < screenWidth; j++)
+		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
+		float rayDirX0 = info->dirX - info->planeX;
+		float rayDirY0 = info->dirY - info->planeY;
+		float rayDirX1 = info->dirX + info->planeX;
+		float rayDirY1 = info->dirY + info->planeY;
+		
+		// Current y position compared to the center of the screen (the horizon)
+		// y=0, -240
+		// y=1, -239
+		// y=240, 0
+		// y=479, 239
+		int p = y - screenHeight / 2;
+
+		// Vertical position of the camera.
+		// 240
+		float posZ = 0.5 * screenHeight;
+
+		// Horizontal distance from the camera to the floor for the current row.
+		// 0.5 is the z position exactly in the middle between floor and celling
+		// -1 <= rowDistance <= 1
+		float rowDistance = posZ / p;
+
+		// calclate the real world step vecter we have to add for each x (parallel to camera plane)
+		// adding step by step avoids multiplications with a weight in the inner loop
+		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
+		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenWidth;
+
+		// real world coordinates of the leftmost column. this will be updated as we step to the right
+		float floorX = info->posX + rowDistance * rayDirX0;
+		float floorY = info->posY + rowDistance * rayDirY0;
+
+		x = 0;
+		while (x < screenWidth)
 		{
-			info->buffer[i][j] = 0;
+			// the cell coord is simply got from the integer parts of floorX and floorY
+			int cellX = (int)(floorX);
+			int cellY = (int)(floorY);
+
+			// get the texture coordinate from the fractional part
+			int tx = (int)(texWidth * (floorX - cellX)) & (texWidth - 1);
+			int ty = (int)(texHeight * (floorY - cellY)) & (texHeight - 1);
+
+			floorX += floorStepX;
+			floorY += floorStepY;
+
+			// choose texture and draw the pixel
+			int floorTexture = 3;
+			int ceilingTexture = 6;
+			int color;
+
+			// floor
+			color = (info->texture)[floorTexture][texWidth * ty + tx];
+			color = (color >> 1) & 8355711; // make a bit darker
+			(info->buffer)[y][x] = color;
+
+			//ceiling (symmetrical, at screenHeight - y - 1 instead of y)
+			color = (info->texture)[ceilingTexture][texWidth * ty + tx];
+			color = (color >> 1) & 8355711; // make a bit darker
+			(info->buffer)[screenHeight - y - 1][x] = color;
+
+			x++;
 		}
+		y++;
 	}
+
+	x = 0;
 	while (x < screenWidth)
 	{
 		// x=0,-1
