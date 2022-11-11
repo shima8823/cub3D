@@ -4,12 +4,12 @@ CPPFLAGS = -Iincludes
 LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR) 
 LDLIBS = -lft -lm
 NAME = cub3D
-SRCS =	main.c \
+SRCS =	main.c read_file.c utils.c\
 		wmlx_get_data_addr.c wmlx_init.c wmlx_new_image.c wmlx_new_window.c wmlx_xpm_file_to_image.c
 
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))
 OBJSDIR = objs
-VPATH = srcs srcs/wrapper_mlx
+VPATH = srcs srcs/wrapper_mlx srcs/read_file srcs/utils
 
 ## libft ##
 LIBFT_DIR = libft
