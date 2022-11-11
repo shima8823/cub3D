@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:24:41 by shima             #+#    #+#             */
-/*   Updated: 2022/05/04 07:37:47 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/11 10:38:40 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include <limits.h>
+# include "get_next_line/get_next_line.h"
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

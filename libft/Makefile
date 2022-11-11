@@ -33,7 +33,9 @@ SRCS =	ft_bzero.c		\
 		ft_putchar_fd.c	\
 		ft_putstr_fd.c	\
 		ft_putendl_fd.c	\
-		ft_putnbr_fd.c
+		ft_putnbr_fd.c	\
+		get_next_line.c	\
+		get_next_line_utils.c
 
 BONUS_SRCS =	ft_lstnew_bonus.c		\
 				ft_lstadd_front_bonus.c	\
@@ -47,6 +49,7 @@ BONUS_SRCS =	ft_lstnew_bonus.c		\
 
 OBJS = $(SRCS:%.c=%.o)
 BONUS_OBJS = $(BONUS_SRCS:%.c=%.o)
+VPATH = get_next_line
 
 ifdef WITH_BONUS
 OBJS += ${BONUS_OBJS}
