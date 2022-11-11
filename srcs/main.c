@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/12 07:04:36 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/12 08:35:17 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ int worldMap[mapWidth][mapHeight]=
   {2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
 };
 
+void	press_x()
+{
+	exit(0);
+}
 
 int main(int argc, char *argv[])
 {
@@ -64,6 +68,7 @@ int main(int argc, char *argv[])
 	init_game_info(&info);
 	mlx_loop_hook(info.mlx_ptr, &main_loop, &info);
 	mlx_key_hook(info.win_ptr, &key_hook, &info);
+	mlx_hook(info.win_ptr, 33, 1L << 17, press_x, NULL);
 	mlx_loop(info.mlx_ptr);
 }
 
