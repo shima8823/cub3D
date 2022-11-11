@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/11 16:31:03 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/12 07:04:36 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int worldMap[mapWidth][mapHeight]=
 int main(int argc, char *argv[])
 {
 	t_game_info	info;
-	
+
 	if (argc != 2)
 		error_exit(ERR_MSG_ARGC);
 	if (is_valid(argv[1]))
@@ -160,7 +160,7 @@ void	calc(t_game_info *info)
 		// x=2,-318/320
 		// x=3,-317/320
 		// ...
-		// x=319,-1/320  
+		// x=319,-1/320
 		// x=320,0
 		// x=321,1/320
 		// ...
@@ -196,7 +196,7 @@ void	calc(t_game_info *info)
 		// |1 / Y|
 		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
 		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-	
+
 		double perpWallDist;
 
 		//what direction to step in x or y-direction (either +1 or -1)
@@ -357,6 +357,20 @@ int	key_hook(int keycode, t_game_info *info)
 	}
 	else if (keycode == KEY_D)
 	{
+		if (worldMap[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)] == false)
+			info->posY += -(info->dirX) * info->moveSpeed;
+		if (worldMap[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)] == false)
+			info->posX += info->dirY * info->moveSpeed;
+	}
+	else if (keycode == KEY_A)
+	{
+		if (worldMap[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)] == false)
+			info->posY -= -(info->dirX) * info->moveSpeed;
+		if (worldMap[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == false)
+			info->posX -= info->dirY * info->moveSpeed;
+	}
+	else if (keycode == KEY_RIGHT_ARROW)
+	{
 		// both camera direction and camera plane must be rotated
 		double oldDirX = info->dirX;
 		info->dirX = info->dirX * cos(-(info->rotSpeed)) - info->dirY * sin(-(info->rotSpeed));
@@ -365,7 +379,7 @@ int	key_hook(int keycode, t_game_info *info)
 		info->planeX = info->planeX * cos(-(info->rotSpeed)) - info->planeY * sin(-(info->rotSpeed));
 		info->planeY = oldPlaneX * sin(-(info->rotSpeed)) + info->planeY * cos(-(info->rotSpeed));
 	}
-	else if (keycode == KEY_A)
+	else if (keycode == KEY_LEFT_ARROW)
 	{
 		double oldDirX = info->dirX;
 		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
@@ -374,6 +388,25 @@ int	key_hook(int keycode, t_game_info *info)
 		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
 		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
+	// else if (keycode == KEY_D)
+	// {
+	// 	// both camera direction and camera plane must be rotated
+	// 	double oldDirX = info->dirX;
+	// 	info->dirX = info->dirX * cos(-(info->rotSpeed)) - info->dirY * sin(-(info->rotSpeed));
+	// 	info->dirY = oldDirX * sin(-(info->rotSpeed)) + info->dirY * cos(-(info->rotSpeed));
+	// 	double oldPlaneX = info->planeX;
+	// 	info->planeX = info->planeX * cos(-(info->rotSpeed)) - info->planeY * sin(-(info->rotSpeed));
+	// 	info->planeY = oldPlaneX * sin(-(info->rotSpeed)) + info->planeY * cos(-(info->rotSpeed));
+	// }
+	// else if (keycode == KEY_A)
+	// {
+	// 	double oldDirX = info->dirX;
+	// 	info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
+	// 	info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
+	// 	double oldPlaneX = info->planeX;
+	// 	info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
+	// 	info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
+	// }
 	else if (keycode == KEY_ESC)
 		exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

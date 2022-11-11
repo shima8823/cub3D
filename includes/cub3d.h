@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/11 16:27:37 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/12 07:02:48 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_RIGHT_ARROW 65363
+# define KEY_LEFT_ARROW 65361
 
 #define mapWidth 24
 #define mapHeight 24
@@ -52,7 +54,7 @@ EA ./path_to_the_east_texture\n\
 \n\
 F 220,100,0\n\
 C 225,30,0\n"
-# define ERR_MSG_INVALID_MAP 
+# define ERR_MSG_INVALID_MAP
 
 
 
