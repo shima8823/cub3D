@@ -6,11 +6,12 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/10 12:48:37 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/11 16:31:03 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include "../includes/wrapper_mlx.h"
 
 void	init_game_info(t_game_info *info);
 int		main_loop(t_game_info *info);
@@ -18,6 +19,8 @@ int		key_hook(int keycode, t_game_info *info);
 
 void	load_texture(t_game_info *info);
 void	load_image(void *mlx_ptr, int *texture, char *path);
+
+bool	is_valid(char *path);
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -52,16 +55,32 @@ int main(int argc, char *argv[])
 {
 	t_game_info	info;
 	
-	info.mlx_ptr = mlx_init();
-	info.win_ptr = mlx_new_window(info.mlx_ptr, screenWidth, screenHeight, "cub3D");
+	if (argc != 2)
+		error_exit(ERR_MSG_ARGC);
+	if (is_valid(argv[1]))
+		error_exit(ERR_MSG_FILE_NAME);
+	ft_bzero(&info, sizeof(t_game_info));
+	read_file(&info, argv[1]);
 	init_game_info(&info);
 	mlx_loop_hook(info.mlx_ptr, &main_loop, &info);
 	mlx_key_hook(info.win_ptr, &key_hook, &info);
 	mlx_loop(info.mlx_ptr);
 }
 
+bool	is_valid(char *path)
+{
+	char *s;
+
+	s = ft_strrchr(path, '.');
+	if (!s || ft_strncmp(s, ".cub", 5) != 0)
+		return (true);
+	return (false);
+}
+
 void	init_game_info(t_game_info *info)
 {
+	info->mlx_ptr = wmlx_init();
+	info->win_ptr = wmlx_new_window(info->mlx_ptr, screenWidth, screenHeight, WINDOW_NAME);
 	info->posX = 22.0;
 	info->posY = 11.5;
 	info->dirX = -1.0;
@@ -72,20 +91,20 @@ void	init_game_info(t_game_info *info)
 	info->rotSpeed = 0.05;
 
 	load_texture(info);
-	info->img.img = mlx_new_image(info->mlx_ptr, screenWidth, screenHeight);
-	info->img.addr = (int *)mlx_get_data_addr(info->img.img, &info->img.bits_per_pixel, &info->img.size_line, &info->img.endian);
+	info->img.img = wmlx_new_image(info->mlx_ptr, screenWidth, screenHeight);
+	info->img.addr = (int *)wmlx_get_data_addr(info->img.img, &info->img.bits_per_pixel, &info->img.size_line, &info->img.endian);
 }
 
 void	load_texture(t_game_info *info)
 {
-	load_image(info->mlx_ptr, info->texture[0], "textures/eagle.xpm");
-	load_image(info->mlx_ptr, info->texture[1], "textures/wood.xpm");
-	load_image(info->mlx_ptr, info->texture[2], "textures/purplestone.xpm");
-	load_image(info->mlx_ptr, info->texture[3], "textures/greystone.xpm");
-	load_image(info->mlx_ptr, info->texture[4], "textures/bluestone.xpm");
-	load_image(info->mlx_ptr, info->texture[5], "textures/mossy.xpm");
-	load_image(info->mlx_ptr, info->texture[6], "textures/redbrick.xpm");
-	load_image(info->mlx_ptr, info->texture[7], "textures/colorstone.xpm");
+	load_image(info->mlx_ptr, info->texture[0], "assets/textures/eagle.xpm");
+	load_image(info->mlx_ptr, info->texture[1], "assets/textures/wood.xpm");
+	load_image(info->mlx_ptr, info->texture[2], "assets/textures/purplestone.xpm");
+	load_image(info->mlx_ptr, info->texture[3], "assets/textures/greystone.xpm");
+	load_image(info->mlx_ptr, info->texture[4], "assets/textures/bluestone.xpm");
+	load_image(info->mlx_ptr, info->texture[5], "assets/textures/mossy.xpm");
+	load_image(info->mlx_ptr, info->texture[6], "assets/textures/redbrick.xpm");
+	load_image(info->mlx_ptr, info->texture[7], "assets/textures/colorstone.xpm");
 }
 
 void	load_image(void *mlx_ptr, int *texture, char *path)
@@ -94,8 +113,8 @@ void	load_image(void *mlx_ptr, int *texture, char *path)
 	int x;
 	int y;
 
-	img.img = mlx_xpm_file_to_image(mlx_ptr, path, &img.width, &img.height);
-	img.addr = (int *)mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line, &img.endian);
+	img.img = wmlx_xpm_file_to_image(mlx_ptr, path, &img.width, &img.height);
+	img.addr = (int *)wmlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line, &img.endian);
 	y = 0;
 	while (y < img.height)
 	{
@@ -132,75 +151,6 @@ void	draw(t_game_info *info)
 void	calc(t_game_info *info)
 {
 	int	x;
-	int y;
-	// FLOOR CASTING
-	y = 0;
-	while (y < screenHeight)
-	{
-		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
-		float rayDirX0 = info->dirX - info->planeX;
-		float rayDirY0 = info->dirY - info->planeY;
-		float rayDirX1 = info->dirX + info->planeX;
-		float rayDirY1 = info->dirY + info->planeY;
-		
-		// Current y position compared to the center of the screen (the horizon)
-		// y=0, -240
-		// y=1, -239
-		// y=240, 0
-		// y=479, 239
-		int p = y - screenHeight / 2;
-
-		// Vertical position of the camera.
-		// 240
-		float posZ = 0.5 * screenHeight;
-
-		// Horizontal distance from the camera to the floor for the current row.
-		// 0.5 is the z position exactly in the middle between floor and celling
-		// -1 <= rowDistance <= 1
-		float rowDistance = posZ / p;
-
-		// calclate the real world step vecter we have to add for each x (parallel to camera plane)
-		// adding step by step avoids multiplications with a weight in the inner loop
-		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
-		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenWidth;
-
-		// real world coordinates of the leftmost column. this will be updated as we step to the right
-		float floorX = info->posX + rowDistance * rayDirX0;
-		float floorY = info->posY + rowDistance * rayDirY0;
-
-		x = 0;
-		while (x < screenWidth)
-		{
-			// the cell coord is simply got from the integer parts of floorX and floorY
-			int cellX = (int)(floorX);
-			int cellY = (int)(floorY);
-
-			// get the texture coordinate from the fractional part
-			int tx = (int)(texWidth * (floorX - cellX)) & (texWidth - 1);
-			int ty = (int)(texHeight * (floorY - cellY)) & (texHeight - 1);
-
-			floorX += floorStepX;
-			floorY += floorStepY;
-
-			// choose texture and draw the pixel
-			int floorTexture = 3;
-			int ceilingTexture = 6;
-			int color;
-
-			// floor
-			color = (info->texture)[floorTexture][texWidth * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
-			(info->buffer)[y][x] = color;
-
-			//ceiling (symmetrical, at screenHeight - y - 1 instead of y)
-			color = (info->texture)[ceilingTexture][texWidth * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
-			(info->buffer)[screenHeight - y - 1][x] = color;
-
-			x++;
-		}
-		y++;
-	}
 
 	x = 0;
 	while (x < screenWidth)
@@ -317,7 +267,7 @@ void	calc(t_game_info *info)
 			drawStart = 0;
 		int drawEnd = lineHeight / 2 + screenHeight / 2;
 		if (drawEnd >= screenHeight)
-			drawEnd = screenHeight - 1;
+			drawEnd = screenHeight;
 
 		// texturing calculations
 		// 1 substracted fron it so that texture 0 can be used!
@@ -352,6 +302,13 @@ void	calc(t_game_info *info)
 		// printf("drawstart: %d\n", drawStart);
 		// printf("texPos: %f\n", texPos);
 		int y;
+		y = 0;
+		// ceiling CASTING
+		while (y < drawStart)
+		{
+			(info->buffer)[y][x] = (int)CEILING_COLOR;
+			y++;
+		}
 		y = drawStart;
 		while (y < drawEnd)
 		{
@@ -363,6 +320,12 @@ void	calc(t_game_info *info)
 			if (side == 1)
 				color = (color >> 1) & 8355711;
 			info->buffer[y][x] = color;
+			y++;
+		}
+		// FLOOR casting
+		while (y < screenHeight)
+		{
+			(info->buffer)[y][x] = FLOOR_COLOR;
 			y++;
 		}
 		x++;
