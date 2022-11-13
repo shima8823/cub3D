@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 13:22:28 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/13 13:24:33 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	load_image(void *mlx_ptr, int *texture, char *path);
 
 bool	is_valid(char *path);
 
-void	press_x()
+int	press_x()
 {
 	exit(0);
 }
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 	init_game_info(&info);
 	mlx_loop_hook(info.mlx_ptr, &main_loop, &info);
 	mlx_hook(info.win_ptr, X_EVENT_KEY_PRESS, X_EVENT_KEY_PRESS_MASK, &key_press, &info);
-	mlx_hook(info.win_ptr, 33, 1L << 17, press_x, NULL);
+	mlx_hook(info.win_ptr, 33, 1L << 17, &press_x, NULL);
 	mlx_loop(info.mlx_ptr);
 }
 
