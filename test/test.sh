@@ -16,7 +16,7 @@ fi
 
 function test_file_parse()
 {
-	$CUBEXEC_DIR/cub3D $1 2> /dev/null
+	$CUBEXEC_DIR/cub3D $1 &> /dev/null
 	if [ $? -eq "1" ]; then
 		printf "$GREEN[$1]\n"
 	else
