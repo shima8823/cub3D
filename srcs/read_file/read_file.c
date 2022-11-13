@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:18:23 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 13:06:15 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/13 15:38:08 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	read_file(t_game_info *info, char *path)
 	printf("C: [%s]\n", info->floor_ceiling_color[1]);
 	printf("pos: %f %f\n", info->posX, info->posY);
 	printf("spawn_dir: %c\n", info->spawn_dir);
+	printf("info->map_size_y: %d\n", info->map_size_y);
+	flood_fill(info->map, info->posX, info->posY, info->map_size_y);
+
 }
 
 void	init_file_parse(t_file_parse *fp)
@@ -181,6 +184,8 @@ void	line_parse(t_game_info *info, t_file_parse *fp, char *line)
 				info->posX = info->map_size_y;
 				line[i] = '0';
 			}
+			else if (line[i] == ' ')
+				line[i] = '0';
 			else if (line[i] == '\n')
 			{
 				line[i] = '\0';

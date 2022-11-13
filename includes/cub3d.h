@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 13:23:48 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/13 15:39:45 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ typedef struct s_game_info
 	unsigned int floor_color;
 	unsigned int ceiling_color;
 	char spawn_dir;
-	int	map_size_x;
 	int	map_size_y;
 	char map[MAP_Y_LIMIT][MAP_X_LIMIT];
 } t_game_info;
@@ -154,5 +153,6 @@ void			error_exit(char *err_msg);
 int				count_array(char **split_line);
 unsigned int	get_color(char *line);
 void			init_player_dir(t_game_info *info);
+void			flood_fill(char map_str[500][500], int pos_x, int pos_y, int map_height);
 
 #endif
