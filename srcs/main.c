@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 13:37:20 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/13 15:35:42 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,10 +287,22 @@ void	calc(t_game_info *info)
 			// Cast the texture coordinate to integer, and mask with (texHeight -1) in case of overflow
 			int texY = (int)texPos & (texHeight - 1);
 			texPos += step;
-			int color = (info->texture)[texNum][texHeight * texY + texX];
+			int color;
+			if (texNum == 1)
+			{
+				if (side == 1 && stepY == 1)
+					color = (info->texture)[W][texHeight * texY + texX];
+				else if (side == 1 && stepY == -1)
+					color = (info->texture)[E][texHeight * texY + texX];
+				else if (side == 0 && stepX == 1)
+					color = (info->texture)[N][texHeight * texY + texX];
+				else if (side == 0 && stepX == -1)
+					color = (info->texture)[S][texHeight * texY + texX];
+			}
+			// int color = (info->texture)[texNum][texHeight * texY + texX];
 			// make color darker for y-sides: R, G, B byte each divided through two with a "shift" and an "and"
-			if (side == 1)
-				color = (color >> 1) & 8355711;
+			// if (side == 1)
+			// 	color = (color >> 1) & 8355711;
 			info->buffer[y][x] = color;
 			y++;
 		}
