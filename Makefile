@@ -4,7 +4,8 @@ CPPFLAGS = -Iincludes
 LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR) 
 LDLIBS = -lft -lm
 NAME = cub3D
-SRCS =	main.c read_file.c utils.c\
+SRCS =	main.c utils.c \
+		read_file.c get_color.c \
 		wmlx_get_data_addr.c wmlx_init.c wmlx_new_image.c wmlx_new_window.c wmlx_xpm_file_to_image.c
 
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))
@@ -52,5 +53,9 @@ fclean: clean
 	$(RM) $(LIBFT)
 	make clean -C $(MINILIBX_DIR)
 	$(RM) $(NAME)
+
+.PHONY: test
+test:
+	test/test.sh
 
 re: fclean all

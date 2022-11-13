@@ -1,0 +1,7 @@
+NO ./assets/textures/dir_north.xpm
+SO ./assets/textures/dir_south.xpm
+WE ./assets/textures/dir_west.xpm
+EA ./assets/textures/dir_east.xpm
+
+F 110,100,0
+C 111,10,0
