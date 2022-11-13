@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/11 16:31:03 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/13 13:06:11 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,12 @@
 
 void	init_game_info(t_game_info *info);
 int		main_loop(t_game_info *info);
-int		key_hook(int keycode, t_game_info *info);
+int		key_press(int keycode, t_game_info *info);
 
 void	load_texture(t_game_info *info);
 void	load_image(void *mlx_ptr, int *texture, char *path);
 
 bool	is_valid(char *path);
-
-int worldMap[mapWidth][mapHeight]=
-{
-  {8,8,8,8,8,8,8,8,8,8,8,4,4,6,4,4,6,4,6,4,4,4,6,4},
-  {8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
-  {8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,6},
-  {8,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6},
-  {8,0,3,3,0,0,0,0,0,8,8,4,0,0,0,0,0,0,0,0,0,0,0,4},
-  {8,0,0,0,0,0,0,0,0,0,8,4,0,0,0,0,0,6,6,6,0,6,4,6},
-  {8,8,8,8,0,8,8,8,8,8,8,4,4,4,4,4,4,6,0,0,0,0,0,6},
-  {7,7,7,7,0,7,7,7,7,0,8,0,8,0,8,0,8,4,0,4,0,6,0,6},
-  {7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,0,0,0,0,0,6},
-  {7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,0,0,0,0,4},
-  {7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,6,0,6,0,6,0,6},
-  {7,7,0,0,0,0,0,0,7,8,0,8,0,8,0,8,8,6,4,6,0,6,6,6},
-  {7,7,7,7,0,7,7,7,7,8,8,4,0,6,8,4,8,3,3,3,0,3,3,3},
-  {2,2,2,2,0,2,2,2,2,4,6,4,0,0,6,0,6,3,0,0,0,0,0,3},
-  {2,2,0,0,0,0,0,2,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
-  {2,0,0,0,0,0,0,0,2,4,0,0,0,0,0,0,4,3,0,0,0,0,0,3},
-  {1,0,0,0,0,0,0,0,1,4,4,4,4,4,6,0,6,3,3,0,0,0,3,3},
-  {2,0,0,0,0,0,0,0,2,2,2,1,2,2,2,6,6,0,0,5,0,5,0,5},
-  {2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
-  {2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5},
-  {2,0,0,0,0,0,0,0,2,0,0,0,0,0,2,5,0,5,0,5,0,5,0,5},
-  {2,2,0,0,0,0,0,2,2,2,0,0,0,2,2,0,5,0,5,0,0,0,5,5},
-  {2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
-};
-
 
 int main(int argc, char *argv[])
 {
@@ -63,7 +34,7 @@ int main(int argc, char *argv[])
 	read_file(&info, argv[1]);
 	init_game_info(&info);
 	mlx_loop_hook(info.mlx_ptr, &main_loop, &info);
-	mlx_key_hook(info.win_ptr, &key_hook, &info);
+	mlx_hook(info.win_ptr, X_EVENT_KEY_PRESS, X_EVENT_KEY_PRESS_MASK, &key_press, &info);
 	mlx_loop(info.mlx_ptr);
 }
 
@@ -81,14 +52,11 @@ void	init_game_info(t_game_info *info)
 {
 	info->mlx_ptr = wmlx_init();
 	info->win_ptr = wmlx_new_window(info->mlx_ptr, screenWidth, screenHeight, WINDOW_NAME);
-	info->posX = 22.0;
-	info->posY = 11.5;
-	info->dirX = -1.0;
-	info->dirY = 0.0;
-	info->planeX = 0.0;
-	info->planeY = 0.66;
-	info->moveSpeed = 0.05;
-	info->rotSpeed = 0.05;
+	info->posX += 0.5;
+	info->posY += 0.5;
+	init_player_dir(info);
+	info->moveSpeed = 0.15;
+	info->rotSpeed = 0.15;
 
 	load_texture(info);
 	info->img.img = wmlx_new_image(info->mlx_ptr, screenWidth, screenHeight);
@@ -97,14 +65,10 @@ void	init_game_info(t_game_info *info)
 
 void	load_texture(t_game_info *info)
 {
-	load_image(info->mlx_ptr, info->texture[0], "assets/textures/eagle.xpm");
-	load_image(info->mlx_ptr, info->texture[1], "assets/textures/wood.xpm");
-	load_image(info->mlx_ptr, info->texture[2], "assets/textures/purplestone.xpm");
-	load_image(info->mlx_ptr, info->texture[3], "assets/textures/greystone.xpm");
-	load_image(info->mlx_ptr, info->texture[4], "assets/textures/bluestone.xpm");
-	load_image(info->mlx_ptr, info->texture[5], "assets/textures/mossy.xpm");
-	load_image(info->mlx_ptr, info->texture[6], "assets/textures/redbrick.xpm");
-	load_image(info->mlx_ptr, info->texture[7], "assets/textures/colorstone.xpm");
+	load_image(info->mlx_ptr, info->texture[0], info->texture_path[N]);
+	load_image(info->mlx_ptr, info->texture[1], info->texture_path[S]);
+	load_image(info->mlx_ptr, info->texture[2], info->texture_path[W]);
+	load_image(info->mlx_ptr, info->texture[3], info->texture_path[E]);
 }
 
 void	load_image(void *mlx_ptr, int *texture, char *path)
@@ -246,7 +210,7 @@ void	calc(t_game_info *info)
 				side = 1;
 			}
 			// check if ray has hit a wall
-			if (worldMap[mapX][mapY] > 0)
+			if (info->map[mapX][mapY] != '0')
 				hit = 1;
 		}
 		// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect)
@@ -271,7 +235,9 @@ void	calc(t_game_info *info)
 
 		// texturing calculations
 		// 1 substracted fron it so that texture 0 can be used!
-		int	texNum = worldMap[mapX][mapY] - 1;
+		int	texNum = info->map[mapX][mapY] - '0';
+		if (!(texNum == 1 || texNum == 0))
+			texNum = 0;
 
 		// calculate value of wallX
 		// where exactly the wall was hit
@@ -306,7 +272,7 @@ void	calc(t_game_info *info)
 		// ceiling CASTING
 		while (y < drawStart)
 		{
-			(info->buffer)[y][x] = (int)CEILING_COLOR;
+			(info->buffer)[y][x] = info->ceiling_color;
 			y++;
 		}
 		y = drawStart;
@@ -325,7 +291,7 @@ void	calc(t_game_info *info)
 		// FLOOR casting
 		while (y < screenHeight)
 		{
-			(info->buffer)[y][x] = FLOOR_COLOR;
+			(info->buffer)[y][x] = info->floor_color;
 			y++;
 		}
 		x++;
@@ -339,21 +305,22 @@ int	main_loop(t_game_info *info)
 	return (EXIT_SUCCESS);
 }
 
-int	key_hook(int keycode, t_game_info *info)
+int	key_press(int keycode, t_game_info *info)
 {
 	if (keycode == KEY_W)
 	{
-		if (worldMap[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY] == false)
+		if (info->map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)info->posY] == '0')
 			info->posX += info->dirX * info->moveSpeed;
-		if (worldMap[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)] == false)
+		if (info->map[(int)info->posX][(int)(info->posY + info->dirY * info->moveSpeed)] == '0')
 			info->posY += info->dirY * info->moveSpeed;
 	}
 	else if (keycode == KEY_S)
 	{
-		if (worldMap[(int)(info->posX - info->dirX * info->moveSpeed)][(int)info->posY] == false)
+		if (info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)info->posY] == '0')
 			info->posX -= info->dirX * info->moveSpeed;
-		if (worldMap[(int)info->posX][(int)(info->posY - info->dirY * info->moveSpeed)] == false)
+		if (info->map[(int)info->posX][(int)(info->posY - info->dirY * info->moveSpeed)] == '0')
 			info->posY -= info->dirY * info->moveSpeed;
+
 	}
 	else if (keycode == KEY_D)
 	{
