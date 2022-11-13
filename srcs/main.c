@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 13:24:33 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/13 13:37:20 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,16 +330,16 @@ int	key_press(int keycode, t_game_info *info)
 	}
 	else if (keycode == KEY_D)
 	{
-		if (info->map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)] == false)
+		if (info->map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
 			info->posY += -(info->dirX) * info->moveSpeed;
-		if (info->map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)] == false)
+		if (info->map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)] == '0')
 			info->posX += info->dirY * info->moveSpeed;
 	}
 	else if (keycode == KEY_A)
 	{
-		if (info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)] == false)
+		if (info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
 			info->posY -= -(info->dirX) * info->moveSpeed;
-		if (info->map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == false)
+		if (info->map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == '0')
 			info->posX -= info->dirY * info->moveSpeed;
 	}
 	else if (keycode == KEY_RIGHT_ARROW)
