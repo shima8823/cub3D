@@ -51,16 +51,6 @@ void	error_and_exit()
 	exit(1);
 }
 
-void	free_map_str(char **map_str, long long map_height)
-{
-	long long i;
-
-	i = 0;
-	while (i < map_height)
-		free(map_str[i++]);
-	free(map_str);
-}
-
 void	free_is_checked(bool **is_checked, long long map_height)
 {
 	long long i;
@@ -72,7 +62,7 @@ void	free_is_checked(bool **is_checked, long long map_height)
 }
 
 
-bool flood_fill_2(char **map_str, bool **is_checked, long long x, long long y, long long map_width, long long map_height)
+bool flood_fill_2(char map_str[500][500], bool **is_checked, long long x, long long y, long long map_width, long long map_height)
 {
 	if (x >= map_width || y >= map_height || x < 0 || y < 0)
 		return (false);
@@ -93,27 +83,15 @@ bool flood_fill_2(char **map_str, bool **is_checked, long long x, long long y, l
 	return (true);
 }
 
-long long get_map_height(char **map_str)
+long long get_map_width_max(char map_str[500][500], int map_height)
 {
-	long long i;
-
-	i = 0;
-	while (map_str[i])
-		i++;
-	if (i <= 2)
-		error_and_exit();
-	return i;
-}
-
-long long get_map_width_max(char **map_str)
-{
-	long long i;
-	long long max_width;
-	long long width;
+	int	i;
+	int max_width;
+	int width;
 
 	i = 0;
 	max_width = 0;
-	while (map_str[i])
+	while (i < map_height)
 	{
 		width = ft_strlen(map_str[i]);
 		if (width > max_width)
@@ -126,15 +104,15 @@ long long get_map_width_max(char **map_str)
 }
 
 // void flood_fill(char **map_str, long long map_width, long long map_height)
-void	flood_fill(char **map_str, long long pos_x, long long pos_y)
+void	flood_fill(char map_str[500][500], int pos_x, int pos_y, int map_height)
 {
 	bool **is_checked;
-	long long map_width;
-	long long map_height;
-	long long i;
+	int map_width;
+	int i;
 
-	map_width = get_map_width_max(map_str);
-	map_height = get_map_height(map_str);
+	if (map_height <= 2)
+		error_and_exit();
+	map_width = get_map_width_max(map_str, map_height);
 	is_checked = (bool **)malloc(sizeof(bool *) * map_height);
 	if (!is_checked)
 		exit(1);
@@ -151,7 +129,6 @@ void	flood_fill(char **map_str, long long pos_x, long long pos_y)
 	else
 		printf("Map OK!");
 	free_is_checked(is_checked, map_height);
-	free_map_str(map_str, map_height);
 }
 
 // void main()
