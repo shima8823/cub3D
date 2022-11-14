@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 12:02:53 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 14:39:51 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,201 +119,27 @@ void	draw(t_game_info *info)
 
 void	calc(t_game_info *info)
 {
-	int	x;
+	t_calc_info calc_info;
 
-	x = 0;
-	while (x < screenWidth)
+	calc_info.x = 0;
+	while (calc_info.x < screenWidth)
 	{
-		// x=0,-1
-		// x=1,-319/320
-		// x=2,-318/320
-		// x=3,-317/320
-		// ...
-		// x=319,-1/320
-		// x=320,0
-		// x=321,1/320
-		// ...
-		// x=637,317/320
-		// x=638,318/320
-		// x=639,319/320
-		// 6cmの1/3は 6 * 1/3 = 2のようにcameraXは割合
-		double cameraX = 2 * x / (double)screenWidth - 1;
-
-		double rayDirX = info->dirX + info->planeX * cameraX;
-		double rayDirY = info->dirY + info->planeY * cameraX;
-
-		//which box of the map we're in
-		int mapX = (int)info->posX;
-		int mapY = (int)info->posY;
-
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-
-		// length of ray from one x or y-side to next x or y-side
-		// deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
-		// deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
-		// ↑三角比の計算
-		// 斜辺 = √a^2 + b^2
-		// 高さは底辺 * tanθ (1 * dirY/dirX)
-		// tanθ = 高さ/底辺 (dirY/dirX)
-		// deltaDistX,Yは式変形で次のように表せられる。
-		// |sqrt(X^2 + Y^2) / X|
-		// |sqrt(X^2 + Y^2) / Y|
-		// DDAでは比率が欲しいので sqrt(X^2 + Y^2)を1にしてしまう
-		// |1 / X|
-		// |1 / Y|
-		double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-		double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-
-		double perpWallDist;
-
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-
-		//calculate step and initial sideDist
-		// deltaDistXの増加分を掛けてる？
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (info->posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - info->posX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (info->posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - info->posY) * deltaDistY;
-		}
-
-		//perform DDA
-		while (hit == 0)
-		{
-			// jump to next map square, either in x-direction, or in y-direction
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			// check if ray has hit a wall
-			if (info->map[mapX][mapY] != '0')
-				hit = 1;
-		}
-		// Calculate distance projected on camera direction (Euclidean distance would give fisheye effect)
-		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
-		else
-			perpWallDist = (sideDistY - deltaDistY);
-
-		// Calculate height of line to draw on screen
-		int lineHeight = (int)(screenHeight / perpWallDist);
-
-		// Calculate lowest and highest pixel to fill in current stripe
-		// -lineHeight / 2 + screenHeight / 2
-		// なぜ上の式になるかは実際にやってみるとわかりやすい。結論はこの式が一番見やすいからということになる。
-		// lineHeight だけ -> lineH + screenH -> lineH + screenH / 2 -> lineH /2 + screenH / 2
-		int drawStart = -lineHeight / 2 + screenHeight / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + screenHeight / 2;
-		if (drawEnd >= screenHeight)
-			drawEnd = screenHeight;
-
-		// texturing calculations
-		// 1 substracted fron it so that texture 0 can be used!
-		int	texNum = info->map[mapX][mapY] - '0';
-		if (!(texNum == 1 || texNum == 0))
-			texNum = 0;
-
-		// calculate value of wallX
-		// where exactly the wall was hit
-		double wallX;
-		if (side == 0)
-			wallX = info->posY + perpWallDist * rayDirY;
-		else
-			wallX = info->posX + perpWallDist * rayDirX;
-		wallX -= floor(wallX);
-
-		// x coordinate on the texture
-		int texX = (int)(wallX * (double)texWidth);
-		if (side == 0 && rayDirX > 0)
-			texX = texWidth - texX - 1;
-		if (side == 1 && rayDirY < 0)
-			texX = texWidth - texX - 1;
-
-		// How much to increase the texture coordinate per screen pixel
-		// 1.0は小数で計算するためにしている。
-		double step = 1.0 * texHeight / lineHeight;
-		// double step = 1.0 * lineHeight / texHeight;
-		// Starting texture coordinate
-		// -lineHeight / 2 + screenHeight / 2 >= 0
-		// そのままtexPos 0で描画されればいい
-		// -lineHeight / 2 + screenHeight / 2 < 0
-		// その分を増やして、stepで減らす。
-		double texPos = (drawStart - screenHeight / 2 + lineHeight / 2) * step;
-		// printf("drawstart: %d\n", drawStart);
-		// printf("texPos: %f\n", texPos);
-		int y;
-		y = 0;
-		// ceiling CASTING
-		while (y < drawStart)
-		{
-			(info->buffer)[y][x] = info->ceiling_color;
-			y++;
-		}
-		y = drawStart;
-		while (y < drawEnd)
-		{
-			// Cast the texture coordinate to integer, and mask with (texHeight -1) in case of overflow
-			int texY = (int)texPos & (texHeight - 1);
-			texPos += step;
-			int color;
-			if (texNum == 1)
-			{
-				if (side == 1 && stepY == 1)
-					color = (info->texture)[W][texHeight * texY + texX];
-				else if (side == 1 && stepY == -1)
-					color = (info->texture)[E][texHeight * texY + texX];
-				else if (side == 0 && stepX == 1)
-					color = (info->texture)[N][texHeight * texY + texX];
-				else if (side == 0 && stepX == -1)
-					color = (info->texture)[S][texHeight * texY + texX];
-			}
-			// int color = (info->texture)[texNum][texHeight * texY + texX];
-			// make color darker for y-sides: R, G, B byte each divided through two with a "shift" and an "and"
-			// if (side == 1)
-			// 	color = (color >> 1) & 8355711;
-			info->buffer[y][x] = color;
-			y++;
-		}
-		// FLOOR casting
-		while (y < screenHeight)
-		{
-			(info->buffer)[y][x] = info->floor_color;
-			y++;
-		}
-		x++;
+		set_calc_info(info, &calc_info);
+		set_step_and_side_dist(info, &calc_info);
+		dda(info, &calc_info);
+		set_perp_wall_dist(&calc_info);
+		calc_info.lineHeight = (int)(screenHeight / calc_info.perpWallDist);
+		set_draw_start_and_end(&calc_info);
+		set_tex_num(info, &calc_info);
+		set_wall_x(info, &calc_info);
+		set_tex_x_coordinate(&calc_info);
+		set_step_and_tex_pos(&calc_info);
+		ceiling_casting(info, &calc_info);
+		calc_info.y = calc_info.drawStart;
+		set_tex_color_to_buffer(info, &calc_info);
+		floor_casting(info, &calc_info);
+		calc_info.x++;
 	}
-	// set_minimap(info);
 }
 
 int	main_loop(t_game_info *info)

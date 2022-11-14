@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:18:23 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 09:37:53 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 12:45:43 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	read_file(t_game_info *info, char *path)
 	// {
 	// 	printf("%s\n", info->map[i]);
 	// }
-	flood_fill(info->map, info->posY, info->posX, info->map_size_y);
+	flood_fill(info);
 }
 
 void	init_file_parse(t_file_parse *fp)
@@ -225,7 +225,7 @@ void	init_player_dir(t_game_info *info)
 		set_player_dir(info, dir_info[W]);
 	else if (c == 'E')
 		set_player_dir(info, dir_info[E]);
-		
+
 }
 
 void	init_dir_info(double (*dir_info)[4][4])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 09:27:33 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 14:42:03 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct s_game_info
 	unsigned int ceiling_color;
 	char spawn_dir;
 	int	map_size_y;
+	int	map_size_x;
 	char map[MAX_Y][MAX_X];
 } t_game_info;
 
@@ -151,11 +152,57 @@ typedef struct s_file_parse
 	char	floor_ceiling_id[2][2];
 } t_file_parse;
 
+typedef struct	s_calc_info
+{
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	int		texNum;
+	double	wallX;
+	int		texX;
+	double	step;
+	double	texPos;
+	int		y;
+	int		x;
+	int		texY;
+	int		color;
+
+}	t_calc_info;
+
+
 void			read_file(t_game_info *info, char *path);
 void			error_exit(char *err_msg);
 int				count_array(char **split_line);
 unsigned int	get_color(char *line);
 void			init_player_dir(t_game_info *info);
-void			flood_fill(char map_str[MAX_Y][MAX_X], int pos_x, int pos_y, int map_height);
+void			flood_fill(t_game_info *info);
+void			set_calc_info(t_game_info *info, t_calc_info *calc_info);
+void			set_step_and_side_dist(t_game_info *info, \
+	t_calc_info *calc_info);
+void			dda(t_game_info *info, t_calc_info *calc_info);
+void			set_perp_wall_dist(t_calc_info *calc_info);
+void			set_draw_start_and_end(t_calc_info*calc_info);
+void			set_tex_num(t_game_info *info, t_calc_info*calc_info);
+void			set_wall_x(t_game_info *info, t_calc_info *calc_info);
+void			set_tex_x_coordinate(t_calc_info *calc_info);
+void			set_step_and_tex_pos(t_calc_info *calc_info);
+void			ceiling_casting(t_game_info *info, t_calc_info *calc_info);
+void			set_tex_color_to_buffer(t_game_info *info, \
+	t_calc_info *calc_info);
+void			floor_casting(t_game_info *info, t_calc_info *calc_info);
 
 #endif
