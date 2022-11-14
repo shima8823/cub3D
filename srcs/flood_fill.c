@@ -62,16 +62,16 @@ void	free_is_checked(bool **is_checked, long long map_height)
 }
 
 
-bool flood_fill_2(char map_str[500][500], bool **is_checked, long long x, long long y, long long map_width, long long map_height)
+bool flood_fill_2(char map_str[MAX_Y][MAX_X], bool **is_checked, long long x, long long y, long long map_width, long long map_height)
 {
 	if (x >= map_width || y >= map_height || x < 0 || y < 0)
 		return (false);
-	if (is_checked[x][y] == true)
+	if (is_checked[y][x] == true)
 		return (true);
-	if (map_str[x][y] == '1')
+	if (map_str[y][x] == '1')
 		return (true);
 	else
-		is_checked[x][y] = true;
+		is_checked[y][x] = true;
 	if (flood_fill_2(map_str, is_checked, x, y - 1, map_width, map_height) == false)
 		return (false);
 	if (flood_fill_2(map_str, is_checked, x - 1, y, map_width, map_height) == false)
@@ -83,7 +83,7 @@ bool flood_fill_2(char map_str[500][500], bool **is_checked, long long x, long l
 	return (true);
 }
 
-long long get_map_width_max(char map_str[500][500], int map_height)
+long long get_map_width_max(char map_str[MAX_Y][MAX_X], int map_height)
 {
 	int	i;
 	int max_width;
@@ -104,7 +104,7 @@ long long get_map_width_max(char map_str[500][500], int map_height)
 }
 
 // void flood_fill(char **map_str, long long map_width, long long map_height)
-void	flood_fill(char map_str[500][500], int pos_x, int pos_y, int map_height)
+void	flood_fill(char map_str[MAX_Y][MAX_X], int pos_x, int pos_y, int map_height)
 {
 	bool **is_checked;
 	int map_width;

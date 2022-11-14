@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 15:39:45 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 09:27:33 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@
 #define texWidth 64
 #define texHeight 64
 
-# define MAP_X_LIMIT 500
-# define MAP_Y_LIMIT 500
+# define MAP_X_LIMIT 200
+# define MAP_Y_LIMIT 200
+
+# define MAX_X MAP_X_LIMIT + 1
+# define MAX_Y MAP_Y_LIMIT + 1
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_PRESS_MASK 1L
@@ -133,7 +136,7 @@ typedef struct s_game_info
 	unsigned int ceiling_color;
 	char spawn_dir;
 	int	map_size_y;
-	char map[MAP_Y_LIMIT][MAP_X_LIMIT];
+	char map[MAX_Y][MAX_X];
 } t_game_info;
 
 typedef struct s_file_parse
@@ -153,6 +156,6 @@ void			error_exit(char *err_msg);
 int				count_array(char **split_line);
 unsigned int	get_color(char *line);
 void			init_player_dir(t_game_info *info);
-void			flood_fill(char map_str[500][500], int pos_x, int pos_y, int map_height);
+void			flood_fill(char map_str[MAX_Y][MAX_X], int pos_x, int pos_y, int map_height);
 
 #endif
