@@ -4,8 +4,9 @@ CPPFLAGS = -Iincludes
 LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR)
 LDLIBS = -lft -lm
 NAME = cub3D
-SRCS =	main.c utils.c flood_fill.c set_calc_info.c set_calc_info_2.c \
-		dda.c casting.c read_file.c get_color.c \
+SRCS =	main.c utils.c flood_fill.c set_calc_info.c set_calc_info_2.c dda.c \
+		casting.c read_file.c get_color.c is_valid.c init_game_info.c key_press.c \
+		key_press_2.c key_press_3.c \
 		wmlx_get_data_addr.c wmlx_init.c wmlx_new_image.c wmlx_new_window.c wmlx_xpm_file_to_image.c
 
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))

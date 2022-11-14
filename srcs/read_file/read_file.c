@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:18:23 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 12:45:43 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 16:36:05 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	read_file(t_game_info *info, char *path)
 	printf("EA: [%s]\n", info->texture_path[E]);
 	printf("F: [%s]\n", info->floor_ceiling_color[0]);
 	printf("C: [%s]\n", info->floor_ceiling_color[1]);
-	printf("pos: %f %f\n", info->posX, info->posY);
+	printf("pos: %f %f\n", info->pos_x, info->pos_y);
 	printf("spawn_dir: %c\n", info->spawn_dir);
 	printf("info->map_size_y: %d\n", info->map_size_y);
 	// for (size_t i = 0; i < info->map_size_y; i++)
@@ -183,8 +183,8 @@ void	line_parse(t_game_info *info, t_file_parse *fp, char *line)
 				if (info->spawn_dir != 0)
 					error_exit(ERR_MSG_MULTIPLE_SPAWN);
 				info->spawn_dir = line[i];
-				info->posY = i;
-				info->posX = info->map_size_y;
+				info->pos_y = i;
+				info->pos_x = info->map_size_y;
 				line[i] = '0';
 			}
 			else if (line[i] == ' ')
@@ -250,8 +250,8 @@ void	init_dir_info(double (*dir_info)[4][4])
 
 void	set_player_dir(t_game_info *info, double *dir_info)
 {
-	info->dirX = dir_info[DIR_X];
-	info->dirY = dir_info[DIR_Y];
-	info->planeX = dir_info[PLANE_X];
-	info->planeY = dir_info[PLANE_Y];
+	info->dir_x = dir_info[DIR_X];
+	info->dir_y = dir_info[DIR_Y];
+	info->plane_x = dir_info[PLANE_X];
+	info->plane_y = dir_info[PLANE_Y];
 }

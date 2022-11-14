@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:59:18 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 14:55:12 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 16:33:42 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	floor_casting(t_game_info *info, t_calc_info *calc_info)
 {
-	while (calc_info->y < screenHeight)
+	while (calc_info->y < SCREEN_HEIGHT)
 	{
 		(info->buffer)[calc_info->y][calc_info->x] = info->floor_color;
 		calc_info->y++;
@@ -23,25 +23,25 @@ void	floor_casting(t_game_info *info, t_calc_info *calc_info)
 
 void	set_tex_color_to_buffer(t_game_info *info, t_calc_info *calc_info)
 {
-	while (calc_info->y < calc_info->drawEnd)
+	while (calc_info->y < calc_info->draw_end)
 	{
-		calc_info->texY = (int)calc_info->texPos & (texHeight - 1);
-		calc_info->texPos += calc_info->step;
+		calc_info->tex_y = (int)calc_info->tex_pos & (TEX_HEIGHT - 1);
+		calc_info->tex_pos += calc_info->step;
 		calc_info->color = 0;
-		if (calc_info->texNum == 1)
+		if (calc_info->tex_num == 1)
 		{
-			if (calc_info->side == 1 && calc_info->stepY == 1)
-				calc_info->color = (info->texture)[W][texHeight * \
-				calc_info->texY + calc_info->texX];
-			else if (calc_info->side == 1 && calc_info->stepY == -1)
-				calc_info->color = (info->texture)[E][texHeight * \
-				calc_info->texY + calc_info->texX];
-			else if (calc_info->side == 0 && calc_info->stepX == 1)
-				calc_info->color = (info->texture)[N][texHeight * \
-				calc_info->texY + calc_info->texX];
-			else if (calc_info->side == 0 && calc_info->stepX == -1)
-				calc_info->color = (info->texture)[S][texHeight * \
-				calc_info->texY + calc_info->texX];
+			if (calc_info->side == 1 && calc_info->step_y == 1)
+				calc_info->color = (info->texture)[W][TEX_HEIGHT * \
+				calc_info->tex_y + calc_info->tex_x];
+			else if (calc_info->side == 1 && calc_info->step_y == -1)
+				calc_info->color = (info->texture)[E][TEX_HEIGHT * \
+				calc_info->tex_y + calc_info->tex_x];
+			else if (calc_info->side == 0 && calc_info->step_x == 1)
+				calc_info->color = (info->texture)[N][TEX_HEIGHT * \
+				calc_info->tex_y + calc_info->tex_x];
+			else if (calc_info->side == 0 && calc_info->step_x == -1)
+				calc_info->color = (info->texture)[S][TEX_HEIGHT * \
+				calc_info->tex_y + calc_info->tex_x];
 		}
 		info->buffer[calc_info->y][calc_info->x] = calc_info->color;
 		calc_info->y++;
@@ -51,7 +51,7 @@ void	set_tex_color_to_buffer(t_game_info *info, t_calc_info *calc_info)
 void	ceiling_casting(t_game_info *info, t_calc_info *calc_info)
 {
 	calc_info->y = 0;
-	while (calc_info->y < calc_info->drawStart)
+	while (calc_info->y < calc_info->draw_start)
 	{
 		(info->buffer)[calc_info->y][calc_info->x] = info->ceiling_color;
 		calc_info->y++;

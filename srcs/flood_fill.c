@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:42:07 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 12:45:07 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 16:11:30 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	flood_fill(t_game_info *info)
 		i++;
 	}
 	if (flood_fill_2(info, is_checked, \
-		(int)info->posY, (int)info->posX) == false)
+		(int)info->pos_y, (int)info->pos_x) == false)
 		error_and_exit();
 	else
 		printf("Map OK!\n");
