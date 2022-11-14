@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 15:35:42 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 10:36:16 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ void	init_game_info(t_game_info *info)
 	info->posX += 0.5;
 	info->posY += 0.5;
 	init_player_dir(info);
-	info->moveSpeed = 0.15;
-	info->rotSpeed = 0.15;
-
+	info->moveSpeed = 0.1;
+	info->rotSpeed = 0.1;
 	load_texture(info);
 	info->img.img = wmlx_new_image(info->mlx_ptr, screenWidth, screenHeight);
 	info->img.addr = (int *)wmlx_get_data_addr(info->img.img, &info->img.bits_per_pixel, &info->img.size_line, &info->img.endian);
@@ -342,16 +341,16 @@ int	key_press(int keycode, t_game_info *info)
 	}
 	else if (keycode == KEY_D)
 	{
-		if (info->map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
+		if (info->map[(int)(info->posX)][(int)(info->posY + -(info->dirX) * info->moveSpeed)] == '0')
 			info->posY += -(info->dirX) * info->moveSpeed;
-		if (info->map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)] == '0')
+		if (info->map[(int)(info->posX + info->dirY * info->moveSpeed)][(int)(info->posY)] == '0')
 			info->posX += info->dirY * info->moveSpeed;
 	}
 	else if (keycode == KEY_A)
 	{
-		if (info->map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)] == '0')
+		if (info->map[(int)(info->posX)][(int)(info->posY - -(info->dirX) * info->moveSpeed)] == '0')
 			info->posY -= -(info->dirX) * info->moveSpeed;
-		if (info->map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)] == '0')
+		if (info->map[(int)(info->posX - info->dirY * info->moveSpeed)][(int)(info->posY)] == '0')
 			info->posX -= info->dirY * info->moveSpeed;
 	}
 	else if (keycode == KEY_RIGHT_ARROW)
@@ -373,25 +372,6 @@ int	key_press(int keycode, t_game_info *info)
 		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
 		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
 	}
-	// else if (keycode == KEY_D)
-	// {
-	// 	// both camera direction and camera plane must be rotated
-	// 	double oldDirX = info->dirX;
-	// 	info->dirX = info->dirX * cos(-(info->rotSpeed)) - info->dirY * sin(-(info->rotSpeed));
-	// 	info->dirY = oldDirX * sin(-(info->rotSpeed)) + info->dirY * cos(-(info->rotSpeed));
-	// 	double oldPlaneX = info->planeX;
-	// 	info->planeX = info->planeX * cos(-(info->rotSpeed)) - info->planeY * sin(-(info->rotSpeed));
-	// 	info->planeY = oldPlaneX * sin(-(info->rotSpeed)) + info->planeY * cos(-(info->rotSpeed));
-	// }
-	// else if (keycode == KEY_A)
-	// {
-	// 	double oldDirX = info->dirX;
-	// 	info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-	// 	info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
-	// 	double oldPlaneX = info->planeX;
-	// 	info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
-	// 	info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
-	// }
 	else if (keycode == KEY_ESC)
 		exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
