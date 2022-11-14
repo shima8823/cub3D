@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:18:23 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 15:38:08 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 09:37:53 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ void	read_file(t_game_info *info, char *path)
 	printf("pos: %f %f\n", info->posX, info->posY);
 	printf("spawn_dir: %c\n", info->spawn_dir);
 	printf("info->map_size_y: %d\n", info->map_size_y);
-	flood_fill(info->map, info->posX, info->posY, info->map_size_y);
-
+	// for (size_t i = 0; i < info->map_size_y; i++)
+	// {
+	// 	printf("%s\n", info->map[i]);
+	// }
+	flood_fill(info->map, info->posY, info->posX, info->map_size_y);
 }
 
 void	init_file_parse(t_file_parse *fp)
@@ -193,9 +196,9 @@ void	line_parse(t_game_info *info, t_file_parse *fp, char *line)
 			}
 			i++;
 		}
-		ft_strlcpy(info->map[info->map_size_y], line, MAP_X_LIMIT);
+		ft_strlcpy(info->map[info->map_size_y], line, MAX_X);
 		info->map_size_y++;
-		if (i - 1 > MAP_X_LIMIT - 1 || info->map_size_y - 1> MAP_Y_LIMIT - 1)
+		if (i > MAX_X - 1 || info->map_size_y > MAX_Y - 1)
 			error_exit(ERR_MSG_MAP_SIZE);
 	}
 }
