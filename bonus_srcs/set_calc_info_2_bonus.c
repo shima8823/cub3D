@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_calc_info_2.c                                  :+:      :+:    :+:   */
+/*   set_calc_info_2_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:59:30 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 21:49:57 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 22:11:58 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	set_step_and_tex_pos(t_calc_info *calc_info)
 {

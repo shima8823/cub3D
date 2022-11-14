@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/15 00:54:06 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/15 00:30:11 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -114,10 +114,14 @@ typedef struct s_game_info
 	double			plane_x;
 	double			plane_y;
 	int				buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
-	int				texture[4][TEX_WIDTH * TEX_HEIGHT];
+	int				texture[8][TEX_WIDTH * TEX_HEIGHT];
 	double			move_speed;
 	double			rot_speed;
 	t_img			img;
+	t_img			north_tex;
+	t_img			south_tex;
+	t_img			west_tex;
+	t_img			east_tex;
 	char			*texture_path[4];
 	char			*floor_ceiling_color[2];
 	unsigned int	floor_color;
@@ -170,6 +174,19 @@ typedef struct s_calc_info
 	int		color;
 }	t_calc_info;
 
+typedef struct s_minimap_info
+{
+	int	y_begin;
+	int	y_end;
+	int	x_begin;
+	int	x_begin_tmp;
+	int	x_end;
+	int	y;
+	int	x;
+	int	y_for_div;
+	int	x_for_div;
+}	t_minimap_info;
+
 // read_file
 void			read_file(t_game_info *info, char *path);
 void			init_player_dir(t_game_info *info);
@@ -209,5 +226,6 @@ void			ceiling_casting(t_game_info *info, t_calc_info *calc_info);
 void			set_tex_color_to_buffer(t_game_info *info, \
 	t_calc_info *calc_info);
 void			floor_casting(t_game_info *info, t_calc_info *calc_info);
+void			set_minimap(t_game_info *info);
 
 #endif

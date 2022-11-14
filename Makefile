@@ -1,5 +1,5 @@
 CFLAGS =
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -Iincludes
 LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR)
 LDLIBS = -lft -lm
@@ -12,7 +12,17 @@ SRCS =	main.c utils.c flood_fill.c set_calc_info.c set_calc_info_2.c dda.c \
 
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))
 OBJSDIR = objs
-VPATH = srcs srcs/wrapper_mlx srcs/read_file srcs/utils
+VPATH = srcs srcs/wrapper_mlx srcs/read_file srcs/utils bonus_srcs
+
+SRCS_BONUS = minimap_bonus.c main_bonus.c utils_bonus.c flood_fill_bonus.c set_calc_info_bonus.c \
+		set_calc_info_2_bonus.c dda_bonus.c casting_bonus.c is_valid_bonus.c \
+		init_game_info_bonus.c key_press_bonus.c key_press_2_bonus.c key_press_3_bonus.c \
+		read_file_bonus.c parse_line_bonus.c parse_map_bonus.c parse_texture_color_bonus.c \
+		get_color_bonus.c init_player_direction_bonus.c wmlx_get_data_addr_bonus.c \
+		wmlx_init_bonus.c wmlx_new_image_bonus.c wmlx_new_window_bonus.c \
+		wmlx_xpm_file_to_image_bonus.c
+OBJS_BONUS = $(addprefix $(OBJS_BONUS_DIR)/, $(SRCS_BONUS:.c=.o))
+OBJS_BONUS_DIR = bonus_srcs
 
 ## libft ##
 LIBFT_DIR = libft
@@ -48,7 +58,7 @@ $(OBJSDIR)/%.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(OBJS_BONUS)
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean
@@ -56,8 +66,12 @@ fclean: clean
 	make clean -C $(MINILIBX_DIR)
 	$(RM) $(NAME)
 
-.PHONY: test
 test:
 	test/test.sh
 
 re: fclean all
+
+bonus: $(LIBFT) $(MINILIBX) $(OBJS_BONUS)
+	$(CC) $(OBJS_BONUS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
+
+.PHONY: all clean fclean re bonus test

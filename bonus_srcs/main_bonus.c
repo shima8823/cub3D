@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/15 00:53:49 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 22:10:23 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include "../includes/wrapper_mlx.h"
 
 static void	draw(t_game_info *info)
@@ -55,6 +55,7 @@ static void	calc(t_game_info *info)
 		floor_casting(info, &calc_info);
 		calc_info.x++;
 	}
+	set_minimap(info);
 }
 
 static int	main_loop(t_game_info *info)
@@ -70,7 +71,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2)
 		error_exit(ERR_MSG_ARGC);
-	if (!is_valid(argv[1]))
+	if (is_valid(argv[1]))
 		error_exit(ERR_MSG_FILE_NAME);
 	ft_bzero(&info, sizeof(t_game_info));
 	read_file(&info, argv[1]);
