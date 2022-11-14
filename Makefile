@@ -1,11 +1,13 @@
-CFLAGS = 
+CFLAGS =
 # CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -Iincludes
-LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR) 
+LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR)
 LDLIBS = -lft -lm
 NAME = cub3D
-SRCS =	main.c utils.c flood_fill.c \
-		read_file.c parse_line.c parse_map.c parse_texture_color.c get_color.c init_player_direction.c \
+SRCS =	main.c utils.c flood_fill.c set_calc_info.c set_calc_info_2.c dda.c \
+		casting.c  is_valid.c init_game_info.c key_press.c \
+		key_press_2.c key_press_3.c  \
+		read_file.c parse_line.c parse_map.c parse_texture_color.c get_color.c init_player_direction.c\
 		wmlx_get_data_addr.c wmlx_init.c wmlx_new_image.c wmlx_new_window.c wmlx_xpm_file_to_image.c
 
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))

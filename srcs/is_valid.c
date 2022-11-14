@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wmlx_get_data_addr.c                               :+:      :+:    :+:   */
+/*   is_valid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 20:35:05 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 16:46:07 by mhida            ###   ########.fr       */
+/*   Created: 2022/11/14 15:16:33 by mhida             #+#    #+#             */
+/*   Updated: 2022/11/14 16:40:10 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/wrapper_mlx.h"
+#include "../includes/cub3d.h"
 
-char	*wmlx_get_data_addr(void *img_ptr, int *bits_per_pixel, \
-	int *size_line, int *endian)
+bool	is_valid(char *path)
 {
-	void	*p;
+	char	*s;
 
-	p = mlx_get_data_addr(img_ptr, bits_per_pixel, size_line, endian);
-	if (!p)
-	{
-		perror("mlx_get_data_addr");
-		exit(EXIT_FAILURE);
-	}
-	return (p);
+	s = ft_strrchr(path, '.');
+	if (!s || ft_strncmp(s, ".cub", 5) != 0)
+		return (true);
+	return (false);
 }

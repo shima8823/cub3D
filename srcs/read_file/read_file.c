@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:18:23 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 19:24:20 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 19:45:31 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ static void	validate_game_info(t_game_info *info, t_file_parse *fp)
 		|| info->spawn_dir == 0
 		|| fp->exists_nl_end_of_map)
 		error_exit(ERR_MSG_INVALID_ID);
-	flood_fill(info->map, info->posY, info->posX, info->map_size_y);
+	flood_fill(info);
 }

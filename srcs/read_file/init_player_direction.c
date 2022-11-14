@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:36:30 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 19:27:42 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 19:47:25 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static void	init_dir_info(double (*dir_info)[4][4])
 
 static void	set_player_dir(t_game_info *info, double *dir_info)
 {
-	info->dirX = dir_info[DIR_X];
-	info->dirY = dir_info[DIR_Y];
-	info->planeX = dir_info[PLANE_X];
-	info->planeY = dir_info[PLANE_Y];
+	info->dir_x = dir_info[DIR_X];
+	info->dir_y = dir_info[DIR_Y];
+	info->plane_x = dir_info[PLANE_X];
+	info->plane_y = dir_info[PLANE_Y];
 }

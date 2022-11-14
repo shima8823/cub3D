@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 19:13:33 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 19:15:30 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 19:46:52 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static void	parse_map_row(char *line, t_game_info *info, size_t *x)
 			if (info->spawn_dir != 0)
 				error_exit(ERR_MSG_MULTIPLE_SPAWN);
 			info->spawn_dir = line[*x];
-			info->posY = *x;
-			info->posX = info->map_size_y;
+			info->pos_y = *x;
+			info->pos_x = info->map_size_y;
 			line[*x] = '0';
 		}
 		else if (line[*x] == ' ')

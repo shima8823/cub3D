@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wmlx_new_image.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:27:30 by shima             #+#    #+#             */
-/*   Updated: 2022/11/10 20:29:06 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 16:47:18 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/wrapper_mlx.h"
+#include "../../includes/wrapper_mlx.h"
 
 void	*wmlx_new_image(void *mlx_ptr, int width, int height)
 {
