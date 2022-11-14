@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:59:30 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 14:42:56 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 14:53:45 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ void	set_tex_x_coordinate(t_calc_info *calc_info)
 void	set_wall_x(t_game_info *info, t_calc_info *calc_info)
 {
 	if (calc_info->side == 0)
-		calc_info->wallX = info->posY + calc_info->perpWallDist * calc_info->rayDirY;
+		calc_info->wallX = \
+		info->posY + calc_info->perpWallDist * calc_info->rayDirY;
 	else
-		calc_info->wallX = info->posX + calc_info->perpWallDist * calc_info->rayDirX;
+		calc_info->wallX = \
+		info->posX + calc_info->perpWallDist * calc_info->rayDirX;
 	calc_info->wallX -= floor(calc_info->wallX);
 }
 

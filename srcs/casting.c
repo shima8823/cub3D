@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:59:18 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 14:43:09 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 14:55:12 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ void	set_tex_color_to_buffer(t_game_info *info, t_calc_info *calc_info)
 		if (calc_info->texNum == 1)
 		{
 			if (calc_info->side == 1 && calc_info->stepY == 1)
-				calc_info->color = (info->texture)[W][texHeight * calc_info->texY + calc_info->texX];
+				calc_info->color = (info->texture)[W][texHeight * \
+				calc_info->texY + calc_info->texX];
 			else if (calc_info->side == 1 && calc_info->stepY == -1)
-				calc_info->color = (info->texture)[E][texHeight * calc_info->texY + calc_info->texX];
+				calc_info->color = (info->texture)[E][texHeight * \
+				calc_info->texY + calc_info->texX];
 			else if (calc_info->side == 0 && calc_info->stepX == 1)
-				calc_info->color = (info->texture)[N][texHeight * calc_info->texY + calc_info->texX];
+				calc_info->color = (info->texture)[N][texHeight * \
+				calc_info->texY + calc_info->texX];
 			else if (calc_info->side == 0 && calc_info->stepX == -1)
-				calc_info->color = (info->texture)[S][texHeight * calc_info->texY + calc_info->texX];
+				calc_info->color = (info->texture)[S][texHeight * \
+				calc_info->texY + calc_info->texX];
 		}
 		info->buffer[calc_info->y][calc_info->x] = calc_info->color;
 		calc_info->y++;

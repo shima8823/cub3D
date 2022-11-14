@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 13:59:30 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 14:42:51 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 14:53:07 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ void	set_draw_start_and_end(t_calc_info*calc_info)
 void	set_perp_wall_dist(t_calc_info *calc_info)
 {
 	if (calc_info->side == 0)
-		calc_info->perpWallDist = (calc_info->sideDistX - calc_info->deltaDistX);
+		calc_info->perpWallDist = \
+		(calc_info->sideDistX - calc_info->deltaDistX);
 	else
-		calc_info->perpWallDist = (calc_info->sideDistY - calc_info->deltaDistY);
+		calc_info->perpWallDist = \
+		(calc_info->sideDistY - calc_info->deltaDistY);
 }
 
 void	set_step_and_side_dist(t_game_info *info, t_calc_info *calc_info)
@@ -65,9 +67,13 @@ void	set_calc_info(t_game_info *info, t_calc_info *calc_info)
 	calc_info->rayDirY = info->dirY + info->planeY * calc_info->cameraX;
 	calc_info->mapX = (int)info->posX;
 	calc_info->mapY = (int)info->posY;
-	calc_info->deltaDistX = (calc_info->rayDirX == 0) \
-		? 1e30 : fabs(1 / calc_info->rayDirX);
-	calc_info->deltaDistY = (calc_info->rayDirY == 0) \
-		? 1e30 : fabs(1 / calc_info->rayDirY);
+	if (calc_info->rayDirX == 0)
+		calc_info->deltaDistX = 1e30;
+	else
+		calc_info->deltaDistX = fabs(1 / calc_info->rayDirX);
+	if (calc_info->rayDirY == 0)
+		calc_info->deltaDistY = 1e30;
+	else
+		calc_info->deltaDistY = fabs(1 / calc_info->rayDirY);
 	calc_info->hit = 0;
 }
