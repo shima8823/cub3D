@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   wmlx_xpm_file_to_image.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 20:38:34 by shima             #+#    #+#             */
-/*   Updated: 2022/11/10 20:40:05 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 16:47:59 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/wrapper_mlx.h"
+#include "../../includes/wrapper_mlx.h"
 
-void	*wmlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height)
+void	*wmlx_xpm_file_to_image(void *mlx_ptr, char *filename, \
+	int *width, int *height)
 {
 	void	*p;
 

@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 16:25:09 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 16:56:17 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define MAP_X_LIMIT 200
 # define MAP_Y_LIMIT 200
 
-# define MAX_X MAP_X_LIMIT + 1
-# define MAX_Y MAP_Y_LIMIT + 1
+# define MAX_X 201
+# define MAX_Y 201
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_PRESS_MASK 1L
@@ -57,7 +57,8 @@ EA ./path_to_the_east_texture\n\
 F 220,100,0\n\
 C 225,30,0\n\n\
 11111\n10001\n10N01\n10001\n11111"
-# define ERR_MSG_INVALID_CHAR "The letter of the map must be one of ' ' '0' '1' 'N' 'S' 'E' 'W'"
+# define ERR_MSG_INVALID_CHAR "The letter of the map must be one of \
+	' ' '0' '1' 'N' 'S' 'E' 'W'"
 # define ERR_MSG_MULTIPLE_SPAWN "There must be one spawn position"
 # define ERR_MSG_COLOR_CHAR "color must be numeric"
 # define ERR_MSG_COLOR_RANGE "R,G,B colors in range [0,255]"
