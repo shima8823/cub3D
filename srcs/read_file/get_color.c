@@ -6,15 +6,15 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:14:56 by shima             #+#    #+#             */
-/*   Updated: 2022/11/13 09:22:08 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 11:43:35 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-unsigned int	atoi_color(char *s);
+static unsigned int	atoi_color(char *s);
 
-unsigned int get_color(char *line)
+unsigned int	get_color(char *line)
 {
 	char			**colors;
 	unsigned int	red;
@@ -31,16 +31,13 @@ unsigned int get_color(char *line)
 	free(colors[1]);
 	free(colors[2]);
 	free(colors);
-	// printf("red: %d\n", red);
-	// printf("green: %d\n", green);
-	// printf("blue: %d\n", blue);
 	return (red << 16 | green << 8 | blue);
 }
 
-unsigned int	atoi_color(char *s)
+static unsigned int	atoi_color(char *s)
 {
-	size_t	i;
-	unsigned int num;
+	size_t			i;
+	unsigned int	num;
 
 	if (!s)
 		exit(EXIT_FAILURE);
