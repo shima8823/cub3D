@@ -5,7 +5,7 @@ LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR)
 LDLIBS = -lft -lm
 NAME = cub3D
 SRCS =	main.c utils.c flood_fill.c \
-		read_file.c get_color.c \
+		read_file.c parse_line.c parse_map.c parse_texture_color.c get_color.c init_player_direction.c \
 		wmlx_get_data_addr.c wmlx_init.c wmlx_new_image.c wmlx_new_window.c wmlx_xpm_file_to_image.c
 
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:%.c=%.o))
