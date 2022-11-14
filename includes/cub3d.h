@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 19:45:13 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 19:57:35 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,10 @@ typedef struct s_game_info
 	double			plane_x;
 	double			plane_y;
 	int				buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
-	int				texture[8][TEX_WIDTH * TEX_HEIGHT];
+	int				texture[4][TEX_WIDTH * TEX_HEIGHT];
 	double			move_speed;
 	double			rot_speed;
 	t_img			img;
-	t_img			north_tex;
-	t_img			south_tex;
-	t_img			west_tex;
-	t_img			east_tex;
 	char			*texture_path[4];
 	char			*floor_ceiling_color[2];
 	unsigned int	floor_color;
