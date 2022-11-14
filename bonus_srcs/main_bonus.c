@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 21:39:37 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 22:10:23 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include "../includes/wrapper_mlx.h"
 
 static void	draw(t_game_info *info)
@@ -55,6 +55,7 @@ static void	calc(t_game_info *info)
 		floor_casting(info, &calc_info);
 		calc_info.x++;
 	}
+	set_minimap(info);
 }
 
 static int	main_loop(t_game_info *info)
