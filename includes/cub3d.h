@@ -6,7 +6,7 @@
 /*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 16:56:17 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 19:13:33 by mhida            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_PRESS_MASK 1L
+
+# define BLACK 0
+# define RED 16711680
+# define WHITE 16777215
 
 # define WINDOW_NAME "cub3D"
 
