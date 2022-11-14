@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:42:45 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 09:27:33 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/14 19:25:38 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ typedef enum e_player_dir
 	PLANE_Y
 }	t_player_dir;
 
-typedef enum e_type
+typedef enum e_state_type
 {
 	NEUTRAL,
 	TEXTURE_MODE,
 	COLOR_MODE,
 	MAP_MODE
-} t_type;
+} t_state_type;
 
 typedef struct s_img
 {
@@ -141,21 +141,39 @@ typedef struct s_game_info
 
 typedef struct s_file_parse
 {
-	int		fd;
-	t_type	state;
-	bool	skip_empty_line;
-	bool	exists_nl_end_of_map;
-	int		texture_index;
-	int		floor_ceiling_index;
-	char	texture_id[4][3];
-	char	floor_ceiling_id[2][2];
+	int				fd;
+	t_state_type	state;
+	bool			skip_empty_line;
+	bool			exists_nl_end_of_map;
+	int				texture_index;
+	int				floor_ceiling_index;
+	char			texture_id[4][3];
+	char			floor_ceiling_id[2][2];
 } t_file_parse;
 
+// read_file/read_file.c
 void			read_file(t_game_info *info, char *path);
+
+// read_file/init_player_direction.c
+void			init_player_dir(t_game_info *info);
+
+// read_file/parse_line.c
+void	parse_line(t_game_info *info, t_file_parse *fp, char *line);
+bool	is_empty_line(char *line);
+
+// read_file/parse_map.c
+void	parse_map(char *line, t_game_info *info, t_file_parse *fp);
+
+// read_file/parse_texture_color.c
+void	parse_texture_color(char *line, char *(*texture_path)[4], char *(*floor_ceiling_color)[2], t_file_parse *fp);
+
+// read_file/get_color.c
+unsigned int	get_color(char *line);
+
+// utils/utils.c
 void			error_exit(char *err_msg);
 int				count_array(char **split_line);
-unsigned int	get_color(char *line);
-void			init_player_dir(t_game_info *info);
+
 void			flood_fill(char map_str[MAX_Y][MAX_X], int pos_x, int pos_y, int map_height);
 
 #endif
