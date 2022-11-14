@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_valid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:16:33 by mhida             #+#    #+#             */
-/*   Updated: 2022/11/14 16:40:10 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 20:00:42 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ bool	is_valid(char *path)
 
 	s = ft_strrchr(path, '.');
 	if (!s || ft_strncmp(s, ".cub", 5) != 0)
-		return (true);
-	return (false);
+		return (false);
+	return (true);
 }

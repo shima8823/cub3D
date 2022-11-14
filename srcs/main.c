@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhida <mhida@student.42tokyo.jp>           +#+  +:+       +#+        */
+/*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:41:15 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 16:26:54 by mhida            ###   ########.fr       */
+/*   Updated: 2022/11/14 20:00:25 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2)
 		error_exit(ERR_MSG_ARGC);
-	if (is_valid(argv[1]))
+	if (!is_valid(argv[1]))
 		error_exit(ERR_MSG_FILE_NAME);
 	ft_bzero(&info, sizeof(t_game_info));
 	read_file(&info, argv[1]);
