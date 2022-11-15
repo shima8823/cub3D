@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 17:22:39 by shima             #+#    #+#             */
-/*   Updated: 2022/11/01 19:35:55 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/15 10:08:41 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
-	unsigned char *us;
+	size_t			i;
+	unsigned char	*us;
 
 	us = (unsigned char *)s;
 	i = 0;
