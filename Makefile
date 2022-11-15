@@ -1,9 +1,9 @@
-CFLAGS =
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -Iincludes
 LDFLAGS = -L$(LIBFT_DIR) -L$(MINILIBX_DIR)
 LDLIBS = -lft -lm
 NAME = cub3D
+NAME_BONUS = cub3D_bonus
 SRCS =	main.c utils.c flood_fill.c set_calc_info.c set_calc_info_2.c dda.c \
 		casting.c  is_valid.c init_game_info.c key_press.c \
 		key_press_2.c key_press_3.c  \
@@ -43,6 +43,11 @@ LDFLAGS += -L/usr/lib
 LDLIBS += -lmlx_Linux -lXext -lX11
 endif
 
+ifdef WITH_BONUS
+OBJS = $(OBJS_BONUS)
+NAME = $(NAME_BONUS)
+endif
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
@@ -64,14 +69,14 @@ clean:
 fclean: clean
 	$(RM) $(LIBFT)
 	make clean -C $(MINILIBX_DIR)
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME_BONUS)
 
 test:
 	test/test.sh
 
 re: fclean all
 
-bonus: $(LIBFT) $(MINILIBX) $(OBJS_BONUS)
-	$(CC) $(OBJS_BONUS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
+bonus:
+	@make WITH_BONUS=1
 
 .PHONY: all clean fclean re bonus test
