@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 10:29:24 by shima             #+#    #+#             */
-/*   Updated: 2022/05/04 06:31:35 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/15 09:35:37 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**ft_split(char const *s, char c)
 	num_arr = cnt_arr(s, c);
 	result = malloc(sizeof(char *) * (num_arr + 1));
 	if (!result)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	result[num_arr] = NULL;
 	return (substr_to_arr(result, s, c));
 }
