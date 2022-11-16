@@ -6,7 +6,7 @@
 /*   By: shima <shima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 19:13:50 by shima             #+#    #+#             */
-/*   Updated: 2022/11/14 19:23:38 by shima            ###   ########.fr       */
+/*   Updated: 2022/11/16 21:48:38 by shima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	parse_texture(char *(*texture_path)[4], \
 		line = get_next_line(fp->fd);
 		if (!is_empty_line(line))
 			error_exit(ERR_MSG_INVALID_ID);
+		free(line);
 		fp->skip_empty_line = true;
 	}
 }
@@ -87,6 +88,7 @@ static void	parse_color(char *(*floor_ceiling_color)[2], \
 		line = get_next_line(fp->fd);
 		if (!is_empty_line(line))
 			error_exit(ERR_MSG_INVALID_ID);
+		free(line);
 		fp->skip_empty_line = true;
 	}
 }
